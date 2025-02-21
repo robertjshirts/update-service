@@ -1,0 +1,3 @@
+Need to figure out how to run this without clogging up my terminal
+Probably a systemd file?
+Symlink so it stays in the repo?
