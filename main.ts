@@ -1,6 +1,8 @@
 import "@std/dotenv/load"
 import { getRequestInfo, Logger } from "./utils.ts";
 
+console.log("Server starting up...");
+
 const LOG_FILE = Deno.env.get("LOG_FILE") || undefined; // Catch any nullish values and set to undefined
 const PORT = Deno.env.get("PORT") || 8088;
 const logger = new Logger(LOG_FILE);
