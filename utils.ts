@@ -67,5 +67,47 @@ export async function getRequestInfo(request: Request) {
   }
 }
 
+/**
+ * Logger class that supports both file and console logging
+ */
+export class Logger {
+  private logFile?: string;
+
+  constructor(logFile?: string) {
+    this.logFile = logFile;
+  }
+
+  /**
+   * Formats a log message with timestamp
+   */
+  private formatMessage(message: string): string {
+    return `[${new Date().toISOString()}] ${message}\n`;
+  }
+
+  /**
+   * Logs a message to either file or console
+   */
+  async log(message: string) {
+    const formattedMessage = this.formatMessage(message);
+    if (this.logFile) {
+      await Deno.writeTextFile(this.logFile, formattedMessage, { append: true });
+    } else {
+      console.log(formattedMessage.trim());
+    }
+  }
+
+  /**
+   * Logs an error message to file (if configured) and always to console.error
+   */
+  async error(message: string) {
+    const formattedMessage = this.formatMessage(`ERROR: ${message}`);
+    if (this.logFile) {
+      await Deno.writeTextFile(this.logFile, formattedMessage, { append: true });
+    }
+    // Always log errors to console.error
+    console.error(formattedMessage.trim());
+  }
+}
+
 // Example usage:
 // const requestInfo = await getRequestInfo(request);
